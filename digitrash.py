@@ -6,7 +6,7 @@ ser = serial.Serial('COM10', 9600)
 pygame.init()
 
 # Definindo cores
-GREY = (128, 128, 128)  # Não Reciclável
+GRAY = (128, 128, 128)  # Não Reciclável
 GREEN = (0, 156, 59)  # Vidro
 BLUE = (0, 143, 210)  # Papel
 RED = (229, 36, 34)  # Plástico
@@ -110,8 +110,18 @@ def leitor_card():
 # Função para exibir uma pergunta na tela
 def display_question(question_data, background_color, player):
     screen.fill(background_color)
-
     question_text = font.render(question_data["question"], True, background_color)
+    question_rect = question_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 50))
+    screen.blit(question_text, question_rect)
+    player_name = font.render(f"{player}", True, WHITE)
+    player_rect = player_name.get_rect(topleft=(10,10))
+    screen.blit(player_name, player_rect)
+    pygame.display.update()
+
+# Função para exibir uma pergunta na tela da fase 3
+def display_question_fase_3(question_data, background_color, player, text_color):
+    screen.fill(background_color)
+    question_text = font.render(question_data["question"], True, text_color)
     question_rect = question_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 50))
     screen.blit(question_text, question_rect)
     player_name = font.render(f"{player}", True, WHITE)
@@ -244,6 +254,88 @@ questions_fase_2 = [
         "question": "3. Dica: Marrom como o que? A casca de um kiwi?",
         "options": [""],
         "correct_answer": "938460AD",
+    },
+    ]
+
+# Lista de questões da fase 3, contendo dicionários para cada questão
+questions_fase_3 = [
+    # Primeira pergunta
+    {
+        "question": "PAPEL",
+        "options": [""],
+        "correct_answer": "E35F21AC",
+    },
+    # Segunda pergunta
+    {
+        "question": "METAL",
+        "options": [""],
+        "correct_answer": "73EB58AC",
+    },
+    # Terceira pergunta
+    {
+        "question": "PAPEL",
+        "options": [""],
+        "correct_answer": "F3DC64AC",
+    },
+    # Quarta pergunta
+    {
+        "question": "PLASTICO",
+        "options": [""],
+        "correct_answer": "E35F21AC",
+    },
+    # Quinta pergunta
+    {
+        "question": "VIDRO",
+        "options": [""],
+        "correct_answer": "938460AD",
+    },
+    # Sexta pergunta - AQUI VAI SER CINZA
+    {
+        "question": "MADEIRA",
+        "options": [""],
+        "correct_answer": "938460AD",
+    },
+    # Sétima pergunta
+    {
+        "question": "ORGANICO",
+        "options": [""],
+        "correct_answer": "831D4AAC",
+    },
+    # Oitava pergunta
+    {
+        "question": "RESIDUOS PERIGOSOS",
+        "options": [""],
+        "correct_answer": "73EB58AC",
+    },
+    # Nona pergunta - AQUI VAI SER LARANJA
+    {
+        "question": "VIDRO",
+        "options": [""],
+        "correct_answer": "E35F21AC",
+    },
+    # Décima pergunta
+    {
+        "question": "PAPEL",
+        "options": [""],
+        "correct_answer": "938460AD",
+    },
+    # Décima primeira pergunta - AQUI VAI SER PRETO
+    {
+        "question": "METAL",
+        "options": [""],
+        "correct_answer": "F3DC64AC",
+    },
+    # Décima segunda pergunta
+    {
+        "question": "PLASTICO",
+        "options": [""],
+        "correct_answer": "831D4AAC",
+    },
+    # Décima terceira pergunta
+    {    
+        "question": "VIDRO",
+        "options": [""],
+        "correct_answer": "F3DC64AC",
     },
     ]
 
@@ -478,10 +570,200 @@ while num_alunos2 > 0:
     pos += 1
     num_alunos2 -= 1  # Reduz o número de alunos a cada vez que as perguntas são respondidas
 
+# FASE 3
+display_current_fase("FASE 3")
+pos = 0  # Qual player estaremos nos referindo
+while num_alunos3 > 0:
+    current_question = 0  # Reinicia o índice da pergunta
+    score = 0  # Reinicia a pontuação
+    
+    display_player_turn(players[pos]["name"], WHITE)
+    
+    # Loop da fase 3
+    running = True
+    while running and current_question < len(questions_fase_3):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False  # Parar o jogo se o professor fechar a janela
+        
+        # Exibir a pergunta enquanto tiver perguntas a serem feitas
+        if current_question < len(questions_fase_3):
+            if current_question == 0:
+                display_question_fase_3(questions_fase_3[current_question], YELLOW, players[pos]['name'], BLUE)
+                               
+                rfid_data = (leitor_card())
+                if rfid_data == questions_fase_3[current_question]["correct_answer"]:
+                    score += 1
+                    # chamaria uma função que mostra que acertou
+                    correct_answer()
+                else:
+                    # chama uma função pra mostrar que errou
+                    wrong_answer()
+                # Move to the next question
+                current_question += 1
+            elif current_question == 1:
+                display_question_fase_3(questions_fase_3[current_question], GREEN, players[pos]['name'], RED)
+                rfid_data = (leitor_card())
+                if rfid_data == questions_fase_3[current_question]["correct_answer"]:
+                    score += 1
+                    # chamaria uma função que mostra que acertou
+                    correct_answer()
+                else:
+                    # chama uma função pra mostrar que errou
+                    wrong_answer()
+                # Move to the next question
+                current_question += 1                
+            elif current_question == 2:
+                display_question_fase_3(questions_fase_3[current_question], BLUE, players[pos]['name'], GREEN)
+                rfid_data = (leitor_card())
+                if rfid_data == questions_fase_3[current_question]["correct_answer"]:
+                    score += 1
+                    # chamaria uma função que mostra que acertou
+                    correct_answer()
+                else:
+                    # chama uma função pra mostrar que errou
+                    wrong_answer()
+                # Move to the next question
+                current_question += 1
+            elif current_question == 3:
+                display_question_fase_3(questions_fase_3[current_question], YELLOW, players[pos]['name'], BROWN)
+                rfid_data = (leitor_card())
+                if rfid_data == questions_fase_3[current_question]["correct_answer"]:
+                    score += 1
+                    # chamaria uma função que mostra que acertou
+                    correct_answer()
+                else:
+                    # chama uma função pra mostrar que errou
+                    wrong_answer()
+                # Move to the next question
+                current_question += 1
+            elif current_question == 4:
+                display_question_fase_3(questions_fase_3[current_question], BROWN, players[pos]['name'], YELLOW)
+                rfid_data = (leitor_card())
+                if rfid_data == questions_fase_3[current_question]["correct_answer"]:
+                    score += 1
+                    # chamaria uma função que mostra que acertou
+                    correct_answer()
+                else:
+                    # chama uma função pra mostrar que errou
+                    wrong_answer()
+                # Move to the next question
+                current_question += 1
+            elif current_question == 5:
+                display_question_fase_3(questions_fase_3[current_question], GRAY, players[pos]['name'], RED)
+                rfid_data = (leitor_card())
+                if rfid_data == questions_fase_3[current_question]["correct_answer"]:
+                    score += 1
+                    # chamaria uma função que mostra que acertou
+                    correct_answer()
+                else:
+                    # chama uma função pra mostrar que errou
+                    wrong_answer()
+                # Move to the next question
+                current_question += 1
+            elif current_question == 6:
+                display_question_fase_3(questions_fase_3[current_question], RED, players[pos]['name'], YELLOW)
+                rfid_data = (leitor_card())
+                if rfid_data == questions_fase_3[current_question]["correct_answer"]:
+                    score += 1
+                    # chamaria uma função que mostra que acertou
+                    correct_answer()
+                else:
+                    # chama uma função pra mostrar que errou
+                    wrong_answer()
+                # Move to the next question
+                current_question += 1
+            elif current_question == 7:
+                display_question_fase_3(questions_fase_3[current_question], GREEN, players[pos]['name'], BLUE)
+                rfid_data = (leitor_card())
+                if rfid_data == questions_fase_3[current_question]["correct_answer"]:
+                    score += 1
+                    # chamaria uma função que mostra que acertou
+                    correct_answer()
+                else:
+                    # chama uma função pra mostrar que errou
+                    wrong_answer()
+                # Move to the next question
+                current_question += 1
+            elif current_question == 8:
+                display_question_fase_3(questions_fase_3[current_question], ORANGE, players[pos]['name'], GREEN)
+                               
+                rfid_data = (leitor_card())
+                if rfid_data == questions_fase_3[current_question]["correct_answer"]:
+                    score += 2
+                    # chamaria uma função que mostra que acertou
+                    correct_answer()
+                else:
+                    # chama uma função pra mostrar que errou
+                    wrong_answer()                
+                # Move to the next question
+                current_question += 1
+            elif current_question == 9:
+                display_question_fase_3(questions_fase_3[current_question], BROWN, players[pos]['name'], RED)
+                               
+                rfid_data = (leitor_card())
+                if rfid_data == questions_fase_3[current_question]["correct_answer"]:
+                    score += 2
+                    # chamaria uma função que mostra que acertou
+                    correct_answer()
+                else:
+                    # chama uma função pra mostrar que errou
+                    wrong_answer()                
+                # Move to the next question
+                current_question += 1
+            elif current_question == 10:
+                display_question_fase_3(questions_fase_3[current_question], BLACK, players[pos]['name'], RED)
+                               
+                rfid_data = (leitor_card())
+                if rfid_data == questions_fase_3[current_question]["correct_answer"]:
+                    score += 2
+                    # chamaria uma função que mostra que acertou
+                    correct_answer()
+                else:
+                    # chama uma função pra mostrar que errou
+                    wrong_answer()                
+                # Move to the next question
+                current_question += 1
+            elif current_question == 11:
+                display_question_fase_3(questions_fase_3[current_question], RED, players[pos]['name'], BLUE)
+                               
+                rfid_data = (leitor_card())
+                if rfid_data == questions_fase_3[current_question]["correct_answer"]:
+                    score += 2
+                    # chamaria uma função que mostra que acertou
+                    correct_answer()
+                else:
+                    # chama uma função pra mostrar que errou
+                    wrong_answer()                
+                # Move to the next question
+                current_question += 1
+            elif current_question == 12:
+                display_question_fase_3(questions_fase_3[current_question], BLUE, players[pos]['name'], YELLOW)
+                               
+                rfid_data = (leitor_card())
+                if rfid_data == questions_fase_3[current_question]["correct_answer"]:
+                    score += 2
+                    # chamaria uma função que mostra que acertou
+                    correct_answer()
+                else:
+                    # chama uma função pra mostrar que errou
+                    wrong_answer()                
+                # Move to the next question
+                current_question += 1
+
+    # Exibir e atualizar o score do jogador aqui, fora do loop de eventos
+    print("------------")
+    print(f'{players[pos]["name"]} fez:')
+    print("Score: ", score)
+    players[pos]["score"] += score
+
+    pos += 1
+    num_alunos3 -= 1  # Reduz o número de alunos a cada vez que as perguntas são respondidas
+
 # Mostrando o score de cada jogador
 screen.fill(WHITE)
 for i, player in enumerate(players):
-    end_text = font.render(f"Pontuação final de {player['name']}: {player['score']}/13", True, BLACK)
+    end_text = font.render(f"Pontuação final de {player['name']}: {player['score']}/26", True, BLACK)
     screen.blit(end_text, (220, 140 + i * 50))  # Ajusta a posição vertical para cada jogador a partir do i. Fará com que cada posição seja diferente.
     pygame.display.update()  # As atualizações vão ser feitas imediatamente
 
