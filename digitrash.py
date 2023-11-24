@@ -143,7 +143,7 @@ questions_fase3 = [
     },
     # Quarta pergunta
     {
-        "question": "PLASTICO",
+        "question": "PLÁSTICO",
         "correct_answer": "E35F21AC",
         "answer": "Metal"
     },
@@ -161,13 +161,13 @@ questions_fase3 = [
     },
     # Sétima pergunta
     {
-        "question": "ORGANICO",
+        "question": "ORGÂNICO",
         "correct_answer": "834B4FAC",
         "answer": "Plástico"
     },
     # Oitava pergunta
     {
-        "question": "RESIDUOS PERIGOSOS",
+        "question": "RESÍDUOS PERIGOSOS",
         "correct_answer": "13BB50AC",
         "answer": "Vidro"
     },
@@ -191,7 +191,7 @@ questions_fase3 = [
     },
     # Décima segunda pergunta
     {
-        "question": "PLASTICO",
+        "question": "PLÁSTICO",
         "correct_answer": "834B4FAC",
         "answer": "Plástico"
     },
@@ -203,6 +203,7 @@ questions_fase3 = [
     },
     ]
 
+# Lista de questões da fase das fotos, contendo dicionários para cada questão
 question_fase_fotos = [
     # Primeira pergunta
     {
@@ -230,12 +231,10 @@ question_fase_fotos = [
         "answer": "Orgânico"
     },
 ]
+
 # Loop principal do jogo
 # Obtém o número de alunos
-# num_alunos = funcoes.get_num_alunos(screen, WIDTH, HEIGHT, WHITE, BLACK, LIGHT_GRAY, font)
 num_alunos, nomes_alunos = funcoes.get_num_alunos(screen, WIDTH, HEIGHT, WHITE, BLACK, LIGHT_GRAY, font, fonte_botoes)
-print(f"Número de alunos: {num_alunos}")
-print("Nomes dos alunos:", nomes_alunos)
 num_alunos2 = num_alunos
 num_alunos3 = num_alunos
 num_alunos_fase_fotos = num_alunos
@@ -356,12 +355,12 @@ while num_alunos_fase_fotos > 0:
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 3:
-                image = pygame.image.load("images/plastico.webp")
+                image = pygame.image.load("images/PLÁSTICO.webp")
                 n = question(current_question, image)
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 4:
-                image = pygame.image.load("images/organico.webp")
+                image = pygame.image.load("images/ORGÂNICO.webp")
                 n = question(current_question, image)
                 score += n
                 current_question += 1 # Move to the next question

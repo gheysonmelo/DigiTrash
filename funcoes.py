@@ -77,7 +77,7 @@ def get_num_alunos(screen, WIDTH, HEIGHT, WHITE, BLACK, LIGHT_GRAY, font, fonte_
                     else:
                         aluno_text += event.unicode
 
-        txt_surface = font.render(aluno_text, True, BLACK)
+        txt_surface = fonte_botoes.render(aluno_text, True, BLACK)
         width = max(200, txt_surface.get_width() + 10)
         input_box.w = width
 
@@ -204,7 +204,7 @@ def correct_answer(screen, font_72, WIDTH, HEIGHT):
         screen.blit(turn_text, turn_rect)
         pygame.display.update()
         # lembrar de aumentar esse tempo abaixo
-        pygame.time.delay(500)
+        pygame.time.delay(2000)
 
 # Função para exibir que o jogador errou
 def wrong_answer(screen, font_72, WIDTH, HEIGHT, answer, font):
