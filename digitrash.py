@@ -26,10 +26,14 @@ LIGHT_GRAY =(192,192,192) # active box
 # Chamada da função que inicializa a tela
 screen, WIDTH, HEIGHT = funcoes.init_screen()
 
-# Definindo a fonte para textos no jogo
-font = pygame.font.Font(None, 48)
+# Definindo fontes para textos no jogo
+font = pygame.font.Font("fonts/Montserrat-Bold.ttf", 38)
+font_72 = pygame.font.Font("fonts/Montserrat-Bold.ttf", 58)
 # Defininfo uma fonte maior para a rodada pegadinha
-font_rodada = pygame.font.Font(None, 72)
+font_144 = pygame.font.Font("fonts/Montserrat-Bold.ttf", 110)
+# Fontes
+fonte_botoes = pygame.font.Font("fonts/Montserrat-Bold.ttf", 30)
+
 
 # Lista de questões, contendo dicionários para cada questão
 questions = [
@@ -201,14 +205,17 @@ questions_fase3 = [
 
 # Loop principal do jogo
 # Obtém o número de alunos
-num_alunos = funcoes.get_num_alunos(screen, WIDTH, HEIGHT, WHITE, BLACK, LIGHT_GRAY, font)
+# num_alunos = funcoes.get_num_alunos(screen, WIDTH, HEIGHT, WHITE, BLACK, LIGHT_GRAY, font)
+num_alunos, nomes_alunos = funcoes.get_num_alunos(screen, WIDTH, HEIGHT, WHITE, BLACK, LIGHT_GRAY, font, fonte_botoes)
+print(f"Número de alunos: {num_alunos}")
+print("Nomes dos alunos:", nomes_alunos)
 num_alunos2 = num_alunos
 num_alunos3 = num_alunos
 players = []  # Lista de jogadores
 
 for i in range(num_alunos):
     player = {
-        "name": f"player " + str(i),
+        "name": nomes_alunos[i].upper(),
         "score": 0
     }
     players.append(player)
@@ -220,16 +227,16 @@ while num_alunos > 0:
     current_question = 0  # Reinicia o índice da pergunta
     score = 0  # Reinicia a pontuação
 
-    def question(current_question, color):
+    def question(current_question, color, answer):
         funcoes.display_question_fase1(screen, font, WIDTH, HEIGHT, questions[current_question], color, players[pos]['name'])
         rfid_data = (funcoes.leitor_card(ser))
         if rfid_data == questions[current_question]["correct_answer"]:
             # Mostra que acertou
-            funcoes.correct_answer(screen, font_rodada, WIDTH, HEIGHT)
+            funcoes.correct_answer(screen, font_72, WIDTH, HEIGHT)
             return 1
         else:
             # Mostra que errou
-            funcoes.wrong_answer(screen, font_rodada, WIDTH, HEIGHT)
+            funcoes.wrong_answer(screen, font_72, WIDTH, HEIGHT, answer, font)
             return 0
     
     # Mostra na tela o nome do jogador da vez
@@ -245,23 +252,23 @@ while num_alunos > 0:
         # Exibir a pergunta enquanto tiver perguntas a serem feitas 
         if current_question < len(questions):
             if current_question == 0:
-                n = question(current_question, RED)
+                n = question(current_question, RED, questions[current_question]["answer"])
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 1:
-                n = question(current_question, BLUE)
+                n = question(current_question, BLUE, questions[current_question]["answer"])
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 2:
-                n = question(current_question, BROWN)
+                n = question(current_question, BROWN, questions[current_question]["answer"])
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 3:
-                n = question(current_question, YELLOW)
+                n = question(current_question, YELLOW, questions[current_question]["answer"])
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 4:
-                n = question(current_question, GREEN)
+                n = question(current_question, GREEN, questions[current_question]["answer"])
                 score += n
                 current_question += 1 # Move to the next question
     
@@ -281,16 +288,16 @@ while num_alunos2 > 0:
     current_question = 0  # Reinicia o índice da pergunta
     score = 0  # Reinicia a pontuação
     
-    def question_fase2(current_question, color):
+    def question_fase2(current_question, color, answer):
         funcoes.display_question(screen, font, WIDTH, HEIGHT, questions_fase2[current_question], color, players[pos]['name'])
         rfid_data = (funcoes.leitor_card(ser))
         if rfid_data == questions_fase2[current_question]["correct_answer"]:
             # Mostra que acertou
-            funcoes.correct_answer(screen, font_rodada, WIDTH, HEIGHT)
+            funcoes.correct_answer(screen, font_72, WIDTH, HEIGHT)
             return 1
         else:
             # Mostra que errou
-            funcoes.wrong_answer(screen, font_rodada, WIDTH, HEIGHT)
+            funcoes.wrong_answer(screen, font_72, WIDTH, HEIGHT, answer, font)
             return 0
 
     # Mostra na tela o nome do jogador da vez
@@ -306,35 +313,35 @@ while num_alunos2 > 0:
         # Exibir a pergunta enquanto tiver perguntas a serem feitas
         if current_question < len(questions_fase2):
             if current_question == 0:
-                n = question_fase2(current_question, GREEN)
+                n = question_fase2(current_question, GREEN, questions_fase2[current_question]["answer"])
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 1:
-                n = question_fase2(current_question, YELLOW)
+                n = question_fase2(current_question, YELLOW, questions_fase2[current_question]["answer"])
                 score += n
                 current_question += 1 # Move to the next question             
             elif current_question == 2:
-                n = question_fase2(current_question, RED)
+                n = question_fase2(current_question, RED, questions_fase2[current_question]["answer"])
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 3:
-                n = question_fase2(current_question, BLUE)
+                n = question_fase2(current_question, BLUE, questions_fase2[current_question]["answer"])
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 4:
-                n = question_fase2(current_question, BROWN)
+                n = question_fase2(current_question, BROWN, questions_fase2[current_question]["answer"])
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 5:
-                n = question_fase2(current_question, BLACK)
+                n = question_fase2(current_question, BLACK, questions_fase2[current_question]["answer"])
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 6:
-                n = question_fase2(current_question, ORANGE)
+                n = question_fase2(current_question, ORANGE, questions_fase2[current_question]["answer"])
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 7:
-                n = question_fase2(current_question, GRAY)
+                n = question_fase2(current_question, GRAY, questions_fase2[current_question]["answer"])
                 score += n
                 current_question += 1 # Move to the next question
 
@@ -355,15 +362,15 @@ while num_alunos3 > 0:
     score = 0  # Reinicia a pontuação
 
     def question_fase3(current_question, color1, color2):
-        funcoes.display_question_fase3(screen, font, WIDTH, HEIGHT, questions_fase3[current_question], color1, players[pos]['name'], color2)
+        funcoes.display_question_fase3(screen, font, WIDTH, HEIGHT, questions_fase3[current_question], color1, players[pos]['name'], color2, font_144)
         rfid_data = (funcoes.leitor_card(ser))
         if rfid_data == questions_fase3[current_question]["correct_answer"]:
             # Mostra que acertou
-            funcoes.correct_answer(screen, font_rodada, WIDTH, HEIGHT)
+            funcoes.correct_answer(screen, font_72, WIDTH, HEIGHT)
             return 1
         else:
             # Mostra que errou
-            funcoes.wrong_answer(screen, font_rodada, WIDTH, HEIGHT)
+            funcoes.wrong_answer_fase3(screen, font_72, WIDTH, HEIGHT)
             return 0
 
     # Mostra na tela o nome do jogador da vez

@@ -3,6 +3,8 @@ import pygame
 import serial
 import sys
 
+
+
 # Função que inicializa a tela do jogo
 def init_screen():
     # Obtendo informações sobre a tela
@@ -15,23 +17,34 @@ def init_screen():
     return screen, WIDTH, HEIGHT
 
 # Função para obter o número de alunos
-def get_num_alunos(screen, WIDTH, HEIGHT, WHITE, BLACK, LIGHT_GRAY, font):
+def get_num_alunos(screen, WIDTH, HEIGHT, WHITE, BLACK, LIGHT_GRAY, font, fonte_botoes):
     screen.fill(WHITE)
 
-    message_text = font.render("Olá Professor(a), quantos alunos participarão do jogo?", True, BLACK)
-    message_rect = message_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 100))
-    screen.blit(message_text, message_rect)
 
-    input_box = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2, 200, 50)
+    message_text1 = font.render("Olá Professor(a), insira o nome de cada aluno e clique em Inserir.", True, BLACK)
+    message_text2 = font.render("Quando terminar, clique em Concluir.", True, BLACK)
+    message_rect1 = message_text1.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 240))
+    message_rect2 = message_text2.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 200))
+    screen.blit(message_text1, message_rect1)
+    screen.blit(message_text2, message_rect2)
+
+    input_box = pygame.Rect(WIDTH // 2 - 100, HEIGHT // 2 - 150, 200, 50)
     color_inactive = WHITE
     color_active = LIGHT_GRAY
     color = color_inactive
     aluno_text = ''
     active = False
 
-    save_button = pygame.Rect(WIDTH // 2 - 50, HEIGHT // 2 + 60, 120, 50)
-    save_color_inactive = pygame.Color('lightgreen')
-    save_color = save_color_inactive
+    insert_button = pygame.Rect(WIDTH // 2 - 50, HEIGHT // 2 - 90, 110, 50)
+    insert_color_inactive = pygame.Color('lightblue')
+    insert_color = insert_color_inactive
+
+    conclude_button = pygame.Rect(WIDTH - 150, HEIGHT - 70, 140, 50)
+    conclude_color_inactive = pygame.Color('lightgreen')
+    conclude_color = conclude_color_inactive
+
+    num_alunos = 0
+    nomes_alunos = []
 
     while True:
         for event in pygame.event.get():
@@ -43,13 +56,22 @@ def get_num_alunos(screen, WIDTH, HEIGHT, WHITE, BLACK, LIGHT_GRAY, font):
                 if input_box.collidepoint(event.pos):
                     active = not active
                     color = color_active if active else color_inactive
-                elif save_button.collidepoint(event.pos):
-                    return int(aluno_text)
+                elif insert_button.collidepoint(event.pos):
+                    if aluno_text:
+                        nomes_alunos.append(aluno_text)
+                        aluno_text = ''
+                        num_alunos += 1
+                elif conclude_button.collidepoint(event.pos):
+                    if num_alunos > 0:
+                        return num_alunos, nomes_alunos
 
             if event.type == pygame.KEYDOWN:
                 if active:
                     if event.key == pygame.K_RETURN:
-                        return int(aluno_text)
+                        if aluno_text:
+                            nomes_alunos.append(aluno_text)
+                            aluno_text = ''
+                            num_alunos += 1
                     elif event.key == pygame.K_BACKSPACE:
                         aluno_text = aluno_text[:-1]
                     else:
@@ -63,12 +85,29 @@ def get_num_alunos(screen, WIDTH, HEIGHT, WHITE, BLACK, LIGHT_GRAY, font):
         pygame.draw.rect(screen, BLACK, input_box, 2)
         screen.blit(txt_surface, (input_box.x + 5, input_box.y + 5))
 
-        pygame.draw.rect(screen, save_color, save_button, border_radius=10)
-        save_text = font.render("Salvar", True, BLACK)
-        save_rect = save_text.get_rect(center=save_button.center)
-        screen.blit(save_text, save_rect)
+        pygame.draw.rect(screen, insert_color, insert_button, border_radius=10)
+        insert_text = fonte_botoes.render("Inserir", True, BLACK)
+        insert_rect = insert_text.get_rect(center=insert_button.center)
+        screen.blit(insert_text, insert_rect)
+
+        pygame.draw.rect(screen, conclude_color, conclude_button, border_radius=10)
+        conclude_text = fonte_botoes.render("Concluir", True, BLACK)
+        conclude_rect = conclude_text.get_rect(center=conclude_button.center)
+        screen.blit(conclude_text, conclude_rect)
+
+        # Exibe os nomes já adicionados em colunas
+        display_names(screen, nomes_alunos, font, WIDTH // 4, HEIGHT // 2 + 40)
 
         pygame.display.flip()
+
+def display_names(screen, nomes_alunos, font, x, y):
+    max_display = 10
+    for i, nome_index in enumerate(range(len(nomes_alunos))):
+        coluna = i // max_display  # Calcula a coluna atual
+        nome = nomes_alunos[nome_index]
+        nome_text = font.render(nome, True, (0, 0, 0))
+        nome_rect = nome_text.get_rect(topleft=(x + coluna * 200, y + i % max_display * 30))
+        screen.blit(nome_text, nome_rect)
 
 # função de keypress ou mousepress para continuar o jogo
 def espera():
@@ -124,10 +163,10 @@ def display_question(screen, font, WIDTH, HEIGHT, question_data, background_colo
     pygame.display.update()
 
 # Função para exibir uma pergunta na tela da fase 3
-def display_question_fase3(screen, font, WIDTH, HEIGHT, question_data, background_color, player, text_color):
+def display_question_fase3(screen, font, WIDTH, HEIGHT, question_data, background_color, player, text_color, font_144):
     screen.fill(background_color)
-    question_text = font.render(question_data["question"], True, text_color)
-    question_rect = question_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 50))
+    question_text = font_144.render(question_data["question"], True, text_color)
+    question_rect = question_text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
     screen.blit(question_text, question_rect)
     player_name = font.render(f"{player}", True, (255, 255, 255))
     player_rect = player_name.get_rect(topleft=(10,10))
@@ -157,9 +196,9 @@ def display_player_turn(screen, font, WIDTH, HEIGHT, player_name, background_col
     pygame.time.delay(2000)
 
 # Função para exibir que o jogador acertou
-def correct_answer(screen, font_rodada, WIDTH, HEIGHT):
+def correct_answer(screen, font_72, WIDTH, HEIGHT):
         screen.fill((0, 156, 59))
-        turn_text = font_rodada.render(f"VOCÊ ACERTOU!", True, (0, 0, 0))
+        turn_text = font_72.render(f"VOCÊ ACERTOU!", True, (0, 0, 0))
         turn_rect = turn_text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
         screen.blit(turn_text, turn_rect)
         pygame.display.update()
@@ -167,15 +206,24 @@ def correct_answer(screen, font_rodada, WIDTH, HEIGHT):
         pygame.time.delay(500)
 
 # Função para exibir que o jogador errou
-def wrong_answer(screen, font_rodada, WIDTH, HEIGHT):
+def wrong_answer(screen, font_72, WIDTH, HEIGHT, answer, font):
     screen.fill((229, 36, 34) )
-    turn_text = font_rodada.render(f"VOCÊ ERROU!", True, (0, 0, 0))
+    turn_text = font_72.render(f"VOCÊ ERROU!", True, (0, 0, 0))
     turn_rect = turn_text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
     screen.blit(turn_text, turn_rect)
-    # answer = font_rodada.render(f"Resposta correta: {question_data['answer']}", True, (0, 0, 0))
-    # answer_rect = answer.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 50))
-    # answer_rect = answer.get_rect(topleft=(10,10))
-    # screen.blit(answer, answer_rect)
+    answer = font.render(f"Resposta correta: {answer}", True, (0, 0, 0))
+    answer_rect = answer.get_rect(topleft=(10,10))
+    screen.blit(answer, answer_rect)
     pygame.display.update()
     # lembrar de aumentar esse tempo abaixo
-    pygame.time.delay(500)
+    pygame.time.delay(2000)
+
+# Função para exibir que o jogador errou sem mostrar a resposta
+def wrong_answer_fase3(screen, font_72, WIDTH, HEIGHT):
+    screen.fill((229, 36, 34) )
+    turn_text = font_72.render(f"VOCÊ ERROU!", True, (0, 0, 0))
+    turn_rect = turn_text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+    screen.blit(turn_text, turn_rect)
+    pygame.display.update()
+    # lembrar de aumentar esse tempo abaixo
+    pygame.time.delay(2000)
