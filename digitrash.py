@@ -12,7 +12,7 @@ ser = funcoes.init_serial()
 funcoes.init_pygame()
 
 # Definindo cores
-GRAY = (128, 128, 128)  # Não Reciclável
+GRAY = (169,169,169)  # Não Reciclável
 GREEN = (0, 156, 59)  # Vidro
 BLUE = (0, 143, 210)  # Papel
 RED = (229, 36, 34)  # Plástico
@@ -20,7 +20,7 @@ YELLOW = (255, 209, 0)  # Metal
 BROWN = (96, 56, 20)  # Orgânico
 WHITE = (255, 255, 255)  # Lixo Hospitalar
 BLACK = (0, 0, 0)  # Madeira
-ORANGE = (255, 165, 0)  # Resíduos Perigosos
+ORANGE = (255,69,0)  # Resíduos Perigosos
 LIGHT_GRAY =(192,192,192) # active box
 
 # Chamada da função que inicializa a tela
@@ -35,33 +35,33 @@ font_rodada = pygame.font.Font(None, 72)
 questions = [
     # Primeira pergunta
     {
-        "question": "1. Dica: Da cor do amor e dos morangos esta lixeira, mas aqui você guarda garrafas e potes.",
-        "options": [""],
-        "correct_answer": "831D4AAC",
+        "question": "1. Sou material de garrafas, embalagens e faço brinquedos",
+        "correct_answer": "834B4FAC",
+        "answer": "Plástico"
     },
     # Segunda pergunta
     {
-        "question": "2. Dica: É a cor do céu em um dia ensolarado, mas aqui é onde desenhamos e escrevemos.",
-        "options": [""],
+        "question": "2. Sou liso, branco e carrego histórias. O que sou?",
         "correct_answer": "F3DC64AC",
+        "answer": "Papel"
     },
     # Terceira pergunta
     {
-        "question": "3. Dica: Marrom como o que? A casca de um kiwi?",
-        "options": [""],
+        "question": "3. Sou da terra, apodreço e viro adubo. O que sou?",
         "correct_answer": "938460AD",
+        "answer": "Orgânico"
     },
     # Quarta pergunta
     {
-        "question": "4. Dica: É onde seu refrigerante fica antes de você beber. Parece uma jóia pequenininha.",
-        "options": [""],
+        "question": "4. Sou duro, brilho muito e gosto de ser reciclado. O que sou?",
         "correct_answer": "E35F21AC",
+        "answer": "Metal"
     },
     # Quinta pergunta
     {
-        "question": "5. Dica: Parece gelo, mas não derrete e quebra facil se não tiver cuidado!",
-        "options": [""],
-        "correct_answer": "73EB58AC",
+        "question": "5. Sou transparente, quebro fácil e reciclo. O que sou?",
+        "correct_answer": "13BB50AC",
+        "answer": "Vidro"
     }
 ]
 
@@ -69,51 +69,51 @@ questions = [
 questions_fase2 = [
     # Primeira pergunta
     {
-        "question": "5. Dica: Parece gelo, mas não derrete e quebra facil se não tiver cuidado!",
-        "options": [""],
-        "correct_answer": "73EB58AC",
+        "question": "1. Parece gelo, mas não derrete e quebra facil se não tiver cuidado!",
+        "correct_answer": "13BB50AC",
+        "answer": "Vidro"
     },
     # Segunda pergunta
     {
-        "question": "4. Dica: É onde seu refrigerante fica antes de você beber. Parece uma jóia pequenininha.",
-        "options": [""],
+        "question": "2. É onde seu refrigerante fica antes de você beber. Parece uma jóia pequenininha.",
         "correct_answer": "E35F21AC",
+        "answer": "Metal"
     },
     # Terceira pergunta
     {
-        "question": "1. Dica: Da cor do amor e dos morangos esta lixeira, mas aqui você guarda garrafas e potes.",
-        "options": [""],
-        "correct_answer": "831D4AAC",
+        "question": "3. Da cor do amor e dos morangos esta lixeira, mas aqui você guarda garrafas e potes.",
+        "correct_answer": "834B4FAC",
+        "answer": "Plástico"
     },
     # Quarta pergunta
     {
-        "question": "2. Dica: É a cor do céu em um dia ensolarado, mas aqui é onde desenhamos e escrevemos.",
-        "options": [""],
+        "question": "4. É a cor do céu em um dia ensolarado, mas aqui é onde desenhamos e escrevemos.",
         "correct_answer": "F3DC64AC",
+        "answer": "Papel"
     },
     # Quinta pergunta
     {
-        "question": "3. Dica: Marrom como o que? A casca de um kiwi?",
-        "options": [""],
+        "question": "5. Marrom como o que? A casca de um kiwi?",
         "correct_answer": "938460AD",
+        "answer": "Orgânico"
     },
     # Sexta pergunta
     {
-        "question": "3. Dica: Marrom como o que? A casca de um kiwi?",
-        "options": [""],
-        "correct_answer": "938460AD",
+        "question": "6. PRETO",
+        "correct_answer": "D57FABAC",
+        "answer": "Madeira"
     },
     # Sétima pergunta
     {
-        "question": "3. Dica: Marrom como o que? A casca de um kiwi?",
-        "options": [""],
-        "correct_answer": "938460AD",
+        "question": "7. LARANJA",
+        "correct_answer": "B3205CAD",
+        "answer": "Resíduos Perigosos"
     },
     # Oitava pergunta
     {
-        "question": "3. Dica: Marrom como o que? A casca de um kiwi?",
-        "options": [""],
-        "correct_answer": "938460AD",
+        "question": "8. CINZA",
+        "correct_answer": "A3CF3BAC",
+        "answer": "Não Reciclável"
     },
     ]
 
@@ -122,80 +122,80 @@ questions_fase3 = [
     # Primeira pergunta
     {
         "question": "PAPEL",
-        "options": [""],
         "correct_answer": "E35F21AC",
+        "answer": "Metal"
     },
     # Segunda pergunta
     {
         "question": "METAL",
-        "options": [""],
-        "correct_answer": "73EB58AC",
+        "correct_answer": "13BB50AC",
+        "answer": "Vidro"
     },
     # Terceira pergunta
     {
         "question": "PAPEL",
-        "options": [""],
         "correct_answer": "F3DC64AC",
+        "answer": "Papel"
     },
     # Quarta pergunta
     {
         "question": "PLASTICO",
-        "options": [""],
         "correct_answer": "E35F21AC",
+        "answer": "Metal"
     },
     # Quinta pergunta
     {
         "question": "VIDRO",
-        "options": [""],
         "correct_answer": "938460AD",
+        "answer": "Orgânico"
     },
-    # Sexta pergunta - AQUI VAI SER CINZA
+    # Sexta pergunta
     {
         "question": "MADEIRA",
-        "options": [""],
-        "correct_answer": "938460AD",
+        "correct_answer": "A3CF3BAC",
+        "answer": "Não Reciclável"
     },
     # Sétima pergunta
     {
         "question": "ORGANICO",
-        "options": [""],
-        "correct_answer": "831D4AAC",
+        "correct_answer": "834B4FAC",
+        "answer": "Plástico"
     },
     # Oitava pergunta
     {
         "question": "RESIDUOS PERIGOSOS",
-        "options": [""],
-        "correct_answer": "73EB58AC",
+        "correct_answer": "13BB50AC",
+        "answer": "Vidro"
     },
-    # Nona pergunta - AQUI VAI SER LARANJA
+    # Nona pergunta
     {
         "question": "VIDRO",
-        "options": [""],
-        "correct_answer": "E35F21AC",
+        "correct_answer": "B3205CAD",
+        "answer": "Resíduos Perigosos"
     },
     # Décima pergunta
     {
         "question": "PAPEL",
-        "options": [""],
         "correct_answer": "938460AD",
+        "answer": "Orgânico"
     },
-    # Décima primeira pergunta - AQUI VAI SER PRETO
+    # Décima primeira pergunta
     {
         "question": "METAL",
-        "options": [""],
-        "correct_answer": "F3DC64AC",
+        "correct_answer": "D57FABAC",
+        "answer": "Madeira"
     },
     # Décima segunda pergunta
     {
         "question": "PLASTICO",
-        "options": [""],
-        "correct_answer": "831D4AAC",
+        "correct_answer": "834B4FAC",
+        "answer": "Plástico"
     },
     # Décima terceira pergunta
     {    
         "question": "VIDRO",
-        "options": [""],
         "correct_answer": "F3DC64AC",
+        "answer": "Papel"
     },
     ]
 
@@ -221,7 +221,7 @@ while num_alunos > 0:
     score = 0  # Reinicia a pontuação
 
     def question(current_question, color):
-        funcoes.display_question(screen, font, WIDTH, HEIGHT, questions[current_question], color, players[pos]['name'])
+        funcoes.display_question_fase1(screen, font, WIDTH, HEIGHT, questions[current_question], color, players[pos]['name'])
         rfid_data = (funcoes.leitor_card(ser))
         if rfid_data == questions[current_question]["correct_answer"]:
             # Mostra que acertou
@@ -326,15 +326,15 @@ while num_alunos2 > 0:
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 5:
-                n = question_fase2(current_question, BROWN)
+                n = question_fase2(current_question, BLACK)
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 6:
-                n = question_fase2(current_question, BROWN)
+                n = question_fase2(current_question, ORANGE)
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 7:
-                n = question_fase2(current_question, BROWN)
+                n = question_fase2(current_question, GRAY)
                 score += n
                 current_question += 1 # Move to the next question
 

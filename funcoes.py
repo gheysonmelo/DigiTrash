@@ -102,6 +102,17 @@ def leitor_card(ser):
             return data
         
 # Função para exibir uma pergunta na tela
+def display_question_fase1(screen, font, WIDTH, HEIGHT, question_data, background_color, player):
+    screen.fill(background_color)
+    question_text = font.render(question_data["question"], True, (0,0,0))
+    question_rect = question_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 50))
+    screen.blit(question_text, question_rect)
+    player_name = font.render(f"{player}", True, (255, 255, 255))
+    player_rect = player_name.get_rect(topleft=(10,10))
+    screen.blit(player_name, player_rect)
+    pygame.display.update()
+
+# Função para exibir uma pergunta na tela
 def display_question(screen, font, WIDTH, HEIGHT, question_data, background_color, player):
     screen.fill(background_color)
     question_text = font.render(question_data["question"], True, background_color)
@@ -161,6 +172,10 @@ def wrong_answer(screen, font_rodada, WIDTH, HEIGHT):
     turn_text = font_rodada.render(f"VOCÊ ERROU!", True, (0, 0, 0))
     turn_rect = turn_text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
     screen.blit(turn_text, turn_rect)
+    # answer = font_rodada.render(f"Resposta correta: {question_data['answer']}", True, (0, 0, 0))
+    # answer_rect = answer.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 50))
+    # answer_rect = answer.get_rect(topleft=(10,10))
+    # screen.blit(answer, answer_rect)
     pygame.display.update()
     # lembrar de aumentar esse tempo abaixo
     pygame.time.delay(500)
