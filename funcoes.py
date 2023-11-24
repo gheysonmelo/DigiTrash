@@ -100,6 +100,7 @@ def get_num_alunos(screen, WIDTH, HEIGHT, WHITE, BLACK, LIGHT_GRAY, font, fonte_
 
         pygame.display.flip()
 
+# Função para exibir os nomes dos alunos em colunas
 def display_names(screen, nomes_alunos, font, x, y):
     max_display = 10
     for i, nome_index in enumerate(range(len(nomes_alunos))):
@@ -227,3 +228,12 @@ def wrong_answer_fase3(screen, font_72, WIDTH, HEIGHT):
     pygame.display.update()
     # lembrar de aumentar esse tempo abaixo
     pygame.time.delay(2000)
+
+# Função para exibir a fase das fotos
+def display_question_fase_photos(screen, font, player, image):
+    screen.fill((255, 255, 255))
+    screen.blit(image, (400, 100))
+    player_name = font.render(f"{player}", True, (255, 255, 255))
+    player_rect = player_name.get_rect(topleft=(10,10))
+    screen.blit(player_name, player_rect)
+    pygame.display.update()

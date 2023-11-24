@@ -203,6 +203,33 @@ questions_fase3 = [
     },
     ]
 
+question_fase_fotos = [
+    # Primeira pergunta
+    {
+        "correct_answer": "F3DC64AC",
+        "answer": "Papel"
+    },
+    # Segunda pergunta
+    {
+        "correct_answer": "13BB50AC",
+        "answer": "Vidro"
+    },
+    # Terceira pergunta
+    {
+        "correct_answer": "E35F21AC",
+        "answer": "Metal"
+    },
+    # Quarta pergunta
+    {
+        "correct_answer": "834B4FAC",
+        "answer": "Plástico"
+    },
+    # Quinta pergunta
+    {
+        "correct_answer": "938460AD",
+        "answer": "Orgânico"
+    },
+]
 # Loop principal do jogo
 # Obtém o número de alunos
 # num_alunos = funcoes.get_num_alunos(screen, WIDTH, HEIGHT, WHITE, BLACK, LIGHT_GRAY, font)
@@ -211,6 +238,7 @@ print(f"Número de alunos: {num_alunos}")
 print("Nomes dos alunos:", nomes_alunos)
 num_alunos2 = num_alunos
 num_alunos3 = num_alunos
+num_alunos_fase_fotos = num_alunos
 players = []  # Lista de jogadores
 
 for i in range(num_alunos):
@@ -280,6 +308,72 @@ while num_alunos > 0:
 
     pos += 1
     num_alunos -= 1  # Reduz o número de alunos a cada vez que as perguntas são respondidas
+
+# FASE FOTOS
+funcoes.display_current_fase(screen, font, WIDTH, HEIGHT, "FASE DAS FOTOS")
+pos = 0  # Qual player estaremos nos referindo
+while num_alunos_fase_fotos > 0:
+    current_question = 0  # Reinicia o índice da pergunta
+    score = 0  # Reinicia a pontuação
+
+    def question(current_question, image):
+        funcoes.display_question_fase_photos(screen, font, player, image)
+        rfid_data = (funcoes.leitor_card(ser))
+        if rfid_data == question_fase_fotos[current_question]["correct_answer"]:
+            # Mostra que acertou
+            funcoes.correct_answer(screen, font_72, WIDTH, HEIGHT)
+            return 1
+        else:
+            # Mostra que errou
+            funcoes.wrong_answer_fase3(screen, font_72, WIDTH, HEIGHT)
+            return 0
+    
+    # Mostra na tela o nome do jogador da vez
+    funcoes.display_player_turn(screen, font, WIDTH, HEIGHT, players[pos]["name"], WHITE)
+    
+    # Loop da fase 1
+    running = True
+    while running and current_question < len(questions):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False  # Parar o jogo se o professor fechar a janela
+
+        # Exibir a pergunta enquanto tiver perguntas a serem feitas 
+        if current_question < len(questions):
+            if current_question == 0:
+                image = pygame.image.load("images/papel.webp")
+                n = question(current_question, image)
+                score += n
+                current_question += 1 # Move to the next question
+            elif current_question == 1:
+                image = pygame.image.load("images/vidro.webp")
+                n = question(current_question, image)
+                score += n
+                current_question += 1 # Move to the next question
+            elif current_question == 2:
+                image = pygame.image.load("images/metal.jpg")
+                n = question(current_question, image)
+                score += n
+                current_question += 1 # Move to the next question
+            elif current_question == 3:
+                image = pygame.image.load("images/plastico.webp")
+                n = question(current_question, image)
+                score += n
+                current_question += 1 # Move to the next question
+            elif current_question == 4:
+                image = pygame.image.load("images/organico.webp")
+                n = question(current_question, image)
+                score += n
+                current_question += 1 # Move to the next question
+    
+    # Exibir e atualizar o score do jogador aqui, fora do loop de eventos
+    print("------------")
+    print(f'{players[pos]["name"]} fez:')
+    print("Score: ", score)
+    players[pos]["score"] += score
+
+    pos += 1
+    num_alunos_fase_fotos -= 1  # Reduz o número de alunos a cada vez que as perguntas são respondidas
 
 # FASE 2
 funcoes.display_current_fase(screen, font, WIDTH, HEIGHT, "FASE 2")
@@ -447,10 +541,11 @@ while num_alunos3 > 0:
     pos += 1
     num_alunos3 -= 1  # Reduz o número de alunos a cada vez que as perguntas são respondidas
 
+
 # Mostrando o score de cada jogador
 screen.fill(WHITE)
 for i, player in enumerate(players):
-    end_text = font.render(f"Pontuação final de {player['name']}: {player['score']}/26", True, BLACK)
+    end_text = font.render(f"Pontuação final de {player['name']}: {player['score']}/31", True, BLACK)
     screen.blit(end_text, (220, 140 + i * 50))  # Ajusta a posição vertical para cada jogador a partir do i. Fará com que cada posição seja diferente.
     pygame.display.update()  # As atualizações vão ser feitas imediatamente
 
