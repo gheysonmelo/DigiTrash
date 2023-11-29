@@ -164,7 +164,7 @@ def display_question(screen, font, WIDTH, HEIGHT, question_data, background_colo
     pygame.display.update()
 
 # Função para exibir uma pergunta na tela da fase 3
-def display_question_fase3(screen, font, WIDTH, HEIGHT, question_data, background_color, player, text_color, font_144):
+def display_question_fase4(screen, font, WIDTH, HEIGHT, question_data, background_color, player, text_color, font_144):
     screen.fill(background_color)
     question_text = font_144.render(question_data["question"], True, text_color)
     question_rect = question_text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
@@ -204,7 +204,7 @@ def correct_answer(screen, font_72, WIDTH, HEIGHT):
         screen.blit(turn_text, turn_rect)
         pygame.display.update()
         # lembrar de aumentar esse tempo abaixo
-        pygame.time.delay(2000)
+        pygame.time.delay(3000)
 
 # Função para exibir que o jogador errou
 def wrong_answer(screen, font_72, WIDTH, HEIGHT, answer, font):
@@ -217,23 +217,23 @@ def wrong_answer(screen, font_72, WIDTH, HEIGHT, answer, font):
     screen.blit(answer, answer_rect)
     pygame.display.update()
     # lembrar de aumentar esse tempo abaixo
-    pygame.time.delay(2000)
+    pygame.time.delay(3000)
 
 # Função para exibir que o jogador errou sem mostrar a resposta
-def wrong_answer_fase3(screen, font_72, WIDTH, HEIGHT):
+def wrong_answer_fase4(screen, font_72, WIDTH, HEIGHT):
     screen.fill((229, 36, 34) )
     turn_text = font_72.render(f"VOCÊ ERROU!", True, (0, 0, 0))
     turn_rect = turn_text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
     screen.blit(turn_text, turn_rect)
     pygame.display.update()
     # lembrar de aumentar esse tempo abaixo
-    pygame.time.delay(2000)
+    pygame.time.delay(3000)
 
 # Função para exibir a fase das fotos
 def display_question_fase_photos(screen, font, player, image):
     screen.fill((255, 255, 255))
-    screen.blit(image, (400, 100))
-    player_name = font.render(f"{player}", True, (255, 255, 255))
+    screen.blit(image, (400, 130))
+    player_name = font.render(f"{player}", True, (0, 0, 0))
     player_rect = player_name.get_rect(topleft=(10,10))
     screen.blit(player_name, player_rect)
     pygame.display.update()

@@ -69,6 +69,50 @@ questions = [
     }
 ]
 
+# Lista de questões da fase das fotos, contendo dicionários para cada questão
+question_fase_fotos = [
+    # Primeira pergunta
+    {
+        "correct_answer": "F3DC64AC",
+        "answer": "Papel"
+    },
+    # Segunda pergunta
+    {
+        "correct_answer": "13BB50AC",
+        "answer": "Vidro"
+    },
+    # Terceira pergunta
+    {
+        "correct_answer": "B3205CAD",
+        "answer": "Resíduos Perigosos"
+    },
+    # Quarta pergunta
+    {
+        "correct_answer": "E35F21AC",
+        "answer": "Metal"
+    },
+    # Quinta pergunta
+    {
+        "correct_answer": "938460AD",
+        "answer": "Orgânico"
+    },
+    # Sexta Pergunta
+    {
+        "correct_answer": "831D4AAC",
+        "answer": "Madeira"
+    },
+    # Sétima pergunta
+    {
+        "correct_answer": "834B4FAC",
+        "answer": "Plástico"
+    },
+    # Oitava pergunta
+    {
+        "correct_answer": "A3CF3BAC",
+        "answer": "Não Reciclável"
+    },
+]
+
 # Lista de questões da fase 2, contendo dicionários para cada questão
 questions_fase2 = [
     # Primeira pergunta
@@ -104,7 +148,7 @@ questions_fase2 = [
     # Sexta pergunta
     {
         "question": "6. PRETO",
-        "correct_answer": "D57FABAC",
+        "correct_answer": "831D4AAC",
         "answer": "Madeira"
     },
     # Sétima pergunta
@@ -121,8 +165,8 @@ questions_fase2 = [
     },
     ]
 
-# Lista de questões da fase 3, contendo dicionários para cada questão
-questions_fase3 = [
+# Lista de questões da fase 4, contendo dicionários para cada questão
+questions_fase4 = [
     # Primeira pergunta
     {
         "question": "PAPEL",
@@ -186,7 +230,7 @@ questions_fase3 = [
     # Décima primeira pergunta
     {
         "question": "METAL",
-        "correct_answer": "D57FABAC",
+        "correct_answer": "831D4AAC",
         "answer": "Madeira"
     },
     # Décima segunda pergunta
@@ -203,40 +247,12 @@ questions_fase3 = [
     },
     ]
 
-# Lista de questões da fase das fotos, contendo dicionários para cada questão
-question_fase_fotos = [
-    # Primeira pergunta
-    {
-        "correct_answer": "F3DC64AC",
-        "answer": "Papel"
-    },
-    # Segunda pergunta
-    {
-        "correct_answer": "13BB50AC",
-        "answer": "Vidro"
-    },
-    # Terceira pergunta
-    {
-        "correct_answer": "E35F21AC",
-        "answer": "Metal"
-    },
-    # Quarta pergunta
-    {
-        "correct_answer": "834B4FAC",
-        "answer": "Plástico"
-    },
-    # Quinta pergunta
-    {
-        "correct_answer": "938460AD",
-        "answer": "Orgânico"
-    },
-]
 
 # Loop principal do jogo
 # Obtém o número de alunos
 num_alunos, nomes_alunos = funcoes.get_num_alunos(screen, WIDTH, HEIGHT, WHITE, BLACK, LIGHT_GRAY, font, fonte_botoes)
 num_alunos2 = num_alunos
-num_alunos3 = num_alunos
+num_alunos4 = num_alunos
 num_alunos_fase_fotos = num_alunos
 players = []  # Lista de jogadores
 
@@ -309,70 +325,87 @@ while num_alunos > 0:
     num_alunos -= 1  # Reduz o número de alunos a cada vez que as perguntas são respondidas
 
 # FASE FOTOS
-funcoes.display_current_fase(screen, font, WIDTH, HEIGHT, "FASE DAS FOTOS")
-pos = 0  # Qual player estaremos nos referindo
-while num_alunos_fase_fotos > 0:
-    current_question = 0  # Reinicia o índice da pergunta
-    score = 0  # Reinicia a pontuação
+# funcoes.display_current_fase(screen, font, WIDTH, HEIGHT, "FASE DAS FOTOS")
+# pos = 0  # Qual player estaremos nos referindo
+# while num_alunos_fase_fotos > 0:
+#     current_question = 0  # Reinicia o índice da pergunta
+#     score = 0  # Reinicia a pontuação
 
-    def question(current_question, image):
-        funcoes.display_question_fase_photos(screen, font, player, image)
-        rfid_data = (funcoes.leitor_card(ser))
-        if rfid_data == question_fase_fotos[current_question]["correct_answer"]:
-            # Mostra que acertou
-            funcoes.correct_answer(screen, font_72, WIDTH, HEIGHT)
-            return 1
-        else:
-            # Mostra que errou
-            funcoes.wrong_answer_fase3(screen, font_72, WIDTH, HEIGHT)
-            return 0
+#     def question(current_question, image):
+#         funcoes.display_question_fase_photos(screen, font, players[pos]["name"], image)
+#         rfid_data = (funcoes.leitor_card(ser))
+#         if rfid_data == question_fase_fotos[current_question]["correct_answer"]:
+#             # Mostra que acertou
+#             funcoes.correct_answer(screen, font_72, WIDTH, HEIGHT)
+#             return 1
+#         else:
+#             # Mostra que errou
+#             funcoes.wrong_answer_fase4(screen, font_72, WIDTH, HEIGHT)
+#             return 0
     
-    # Mostra na tela o nome do jogador da vez
-    funcoes.display_player_turn(screen, font, WIDTH, HEIGHT, players[pos]["name"], WHITE)
+#     # Mostra na tela o nome do jogador da vez
+#     funcoes.display_player_turn(screen, font, WIDTH, HEIGHT, players[pos]["name"], WHITE)
     
-    # Loop da fase 1
-    running = True
-    while running and current_question < len(questions):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False  # Parar o jogo se o professor fechar a janela
+#     # Loop da fase 1
+#     running = True
+#     while running and current_question < len(question_fase_fotos):
+#         for event in pygame.event.get():
+#             if event.type == pygame.QUIT:
+#                 running = False  # Parar o jogo se o professor fechar a janela
 
-        # Exibir a pergunta enquanto tiver perguntas a serem feitas 
-        if current_question < len(questions):
-            if current_question == 0:
-                image = pygame.image.load("images/papel.webp")
-                n = question(current_question, image)
-                score += n
-                current_question += 1 # Move to the next question
-            elif current_question == 1:
-                image = pygame.image.load("images/vidro.webp")
-                n = question(current_question, image)
-                score += n
-                current_question += 1 # Move to the next question
-            elif current_question == 2:
-                image = pygame.image.load("images/metal.jpg")
-                n = question(current_question, image)
-                score += n
-                current_question += 1 # Move to the next question
-            elif current_question == 3:
-                image = pygame.image.load("images/PLÁSTICO.webp")
-                n = question(current_question, image)
-                score += n
-                current_question += 1 # Move to the next question
-            elif current_question == 4:
-                image = pygame.image.load("images/ORGÂNICO.webp")
-                n = question(current_question, image)
-                score += n
-                current_question += 1 # Move to the next question
+#         # Exibir a pergunta enquanto tiver perguntas a serem feitas 
+#         if current_question < len(question_fase_fotos):
+#             if current_question == 0:
+#                 image = pygame.image.load("images/papel.jpeg")
+#                 n = question(current_question, image)
+#                 score += n
+#                 current_question += 1 # Move to the next question
+#             elif current_question == 1:
+#                 image = pygame.image.load("images/vidro.jpeg")
+#                 n = question(current_question, image)
+#                 score += n
+#                 current_question += 1 # Move to the next question
+#             elif current_question == 2:
+#                 image = pygame.image.load("images/residuos-perigosos.jpeg")
+#                 n = question(current_question, image)
+#                 score += n
+#                 current_question += 1 # Move to the next question
+#             elif current_question == 3:
+#                 image = pygame.image.load("images/metal.jpeg")
+#                 n = question(current_question, image)
+#                 score += n
+#                 current_question += 1 # Move to the next question
+#             elif current_question == 4:
+#                 image = pygame.image.load("images/organico.jpeg")
+#                 n = question(current_question, image)
+#                 score += n
+#                 current_question += 1 # Move to the next question
+#             elif current_question == 5:
+#                 image = pygame.image.load("images/madeira.jpeg")
+#                 n = question(current_question, image)
+#                 score += n
+#                 current_question += 1 # Move to the next question
+#             elif current_question == 6:
+#                 print("ENTREI AQUI 6")
+#                 image = pygame.image.load("images/plastico.jpeg")
+#                 n = question(current_question, image)
+#                 score += n
+#                 current_question += 1 # Move to the next question
+#             elif current_question == 7:
+#                 print("ENTREI AQUI 7")
+#                 image = pygame.image.load("images/nao-reciclavel.jpeg")
+#                 n = question(current_question, image)
+#                 score += n
+#                 current_question += 1 # Move to the next question   
     
-    # Exibir e atualizar o score do jogador aqui, fora do loop de eventos
-    print("------------")
-    print(f'{players[pos]["name"]} fez:')
-    print("Score: ", score)
-    players[pos]["score"] += score
+#     # Exibir e atualizar o score do jogador aqui, fora do loop de eventos
+#     print("------------")
+#     print(f'{players[pos]["name"]} fez:')
+#     print("Score: ", score)
+#     players[pos]["score"] += score
 
-    pos += 1
-    num_alunos_fase_fotos -= 1  # Reduz o número de alunos a cada vez que as perguntas são respondidas
+#     pos += 1
+#     num_alunos_fase_fotos -= 1  # Reduz o número de alunos a cada vez que as perguntas são respondidas
 
 # FASE 2
 funcoes.display_current_fase(screen, font, WIDTH, HEIGHT, "FASE 2")
@@ -447,87 +480,87 @@ while num_alunos2 > 0:
     pos += 1
     num_alunos2 -= 1  # Reduz o número de alunos a cada vez que as perguntas são respondidas
 
-# FASE 3
+# fase 4
 funcoes.display_current_fase(screen, font, WIDTH, HEIGHT, "FASE 3")
 pos = 0  # Qual player estaremos nos referindo
-while num_alunos3 > 0:
+while num_alunos4 > 0:
     current_question = 0  # Reinicia o índice da pergunta
     score = 0  # Reinicia a pontuação
 
-    def question_fase3(current_question, color1, color2):
-        funcoes.display_question_fase3(screen, font, WIDTH, HEIGHT, questions_fase3[current_question], color1, players[pos]['name'], color2, font_144)
+    def question_fase4(current_question, color1, color2):
+        funcoes.display_question_fase4(screen, font, WIDTH, HEIGHT, questions_fase4[current_question], color1, players[pos]['name'], color2, font_144)
         rfid_data = (funcoes.leitor_card(ser))
-        if rfid_data == questions_fase3[current_question]["correct_answer"]:
+        if rfid_data == questions_fase4[current_question]["correct_answer"]:
             # Mostra que acertou
             funcoes.correct_answer(screen, font_72, WIDTH, HEIGHT)
             return 1
         else:
             # Mostra que errou
-            funcoes.wrong_answer_fase3(screen, font_72, WIDTH, HEIGHT)
+            funcoes.wrong_answer_fase4(screen, font_72, WIDTH, HEIGHT)
             return 0
 
     # Mostra na tela o nome do jogador da vez
     funcoes.display_player_turn(screen, font, WIDTH, HEIGHT, players[pos]["name"], WHITE)
     
-    # Loop da fase 3
+    # Loop da fase 4
     running = True
-    while running and current_question < len(questions_fase3):
+    while running and current_question < len(questions_fase4):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False  # Parar o jogo se o professor fechar a janela
         
         # Exibir a pergunta enquanto tiver perguntas a serem feitas
-        if current_question < len(questions_fase3):
+        if current_question < len(questions_fase4):
             if current_question == 0:
-                n = question_fase3(current_question, YELLOW, BLUE)
+                n = question_fase4(current_question, YELLOW, BLUE)
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 1:
-                n = question_fase3(current_question, GREEN, RED)
+                n = question_fase4(current_question, GREEN, BLUE)
                 score += n
                 current_question += 1 # Move to the next question              
             elif current_question == 2:
-                n = question_fase3(current_question, BLUE, GREEN)
+                n = question_fase4(current_question, BLUE, YELLOW)
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 3:
-                n = question_fase3(current_question, YELLOW, BROWN)
+                n = question_fase4(current_question, YELLOW, BLUE)
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 4:
-                n = question_fase3(current_question, BROWN, YELLOW)
+                n = question_fase4(current_question, BROWN, YELLOW)
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 5:
-                n = question_fase3(current_question, GRAY, RED)
+                n = question_fase4(current_question, GRAY, GREEN)
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 6:
-                n = question_fase3(current_question, RED, YELLOW)
+                n = question_fase4(current_question, RED, BLUE)
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 7:
-                n = question_fase3(current_question, GREEN, BLUE)
+                n = question_fase4(current_question, GREEN, BLUE)
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 8:
-                n = question_fase3(current_question, ORANGE, GREEN)
+                n = question_fase4(current_question, ORANGE, YELLOW)
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 9:
-                n = question_fase3(current_question, BROWN, RED)
+                n = question_fase4(current_question, BROWN, YELLOW)
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 10:
-                n = question_fase3(current_question, BLACK, RED)
+                n = question_fase4(current_question, BLACK, RED)
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 11:
-                n = question_fase3(current_question, RED, BLUE)
+                n = question_fase4(current_question, RED, BLUE)
                 score += n
                 current_question += 1 # Move to the next question
             elif current_question == 12:
-                n = question_fase3(current_question, BLUE, YELLOW)
+                n = question_fase4(current_question, BLUE, YELLOW)
                 score += n
                 current_question += 1 # Move to the next question
 
@@ -538,13 +571,13 @@ while num_alunos3 > 0:
     players[pos]["score"] += score
 
     pos += 1
-    num_alunos3 -= 1  # Reduz o número de alunos a cada vez que as perguntas são respondidas
+    num_alunos4 -= 1  # Reduz o número de alunos a cada vez que as perguntas são respondidas
 
 
 # Mostrando o score de cada jogador
 screen.fill(WHITE)
 for i, player in enumerate(players):
-    end_text = font.render(f"Pontuação final de {player['name']}: {player['score']}/31", True, BLACK)
+    end_text = font.render(f"Pontuação final de {player['name']}: {player['score']}/34", True, BLACK)
     screen.blit(end_text, (220, 140 + i * 50))  # Ajusta a posição vertical para cada jogador a partir do i. Fará com que cada posição seja diferente.
     pygame.display.update()  # As atualizações vão ser feitas imediatamente
 
